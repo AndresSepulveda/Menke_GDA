@@ -63,7 +63,7 @@ plot( mt(2), mt(1), 'go', 'LineWidth', 3 );
 % Newton's method, calculate derivatives
 % y = sin( w0 m1  x) + m1 m2;
 % dy/dm1 = w0 x cos( w0 m1 x) + m2
-% dy/dm2 = m2
+% dy/dm2 = m2                                             <----- error,  dy/dm2 = m1     09/11/2022
 
 % initial guess and corresponding error
 mg=[1,1]';
@@ -91,7 +91,8 @@ for k = [1:Niter]
     
     G = zeros(N,2);
     G(:,1) = w0 * x .* cos( w0 * mg(1) * x ) + mg(2);
-    G(:,2) = mg(2)*ones(N,1);
+%%%%    G(:,2) = mg(2)*ones(N,1);                                          <----- error,  dy/dm2 = m1     09/11/2022
+    G(:,2) = mg(1)*ones(N,1);        
     
     % least squares solution
     dm = (G'*G)\(G'*dd);
